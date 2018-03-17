@@ -4,7 +4,7 @@
   "description": "Acme Reux",
   "main": "index.js",
   "scripts": {
-    "start": "webpack -w & DATABASE_URL=postgres://acme_react_with_redux nodemon server.js",
+    "start": "webpack -w & DATABASE_URL=postgres://localhost/acme_react_with_redux nodemon server.js",
     "start-server": "nodemon server",
     "build-client": "webpack"
   },
