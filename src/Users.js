@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import store, { getUsers, addUser } from "../store";
+import { Link, Redirect } from 'react-router-dom';
+import store, { getUsers, addUser, updateUsers } from "../store";
 import axios from 'axios';
 
 export default class Users extends Component {
@@ -18,7 +18,7 @@ export default class Users extends Component {
         store.dispatch(getUsers(users))
       })
 
-    this.unsubscribe = store.subscribe( () =>
+      this.unsubscribe = store.subscribe( () =>
       this.setState(store.getState())
     );
   }
@@ -37,9 +37,13 @@ export default class Users extends Component {
     axios.post('/api/users', { name: user })
       .then( res => res.data )
       .then( user => {
-        // store.dispatch(getNewUsers(user))
-        // store.dispatch(clear())
+        store.dispatch(updateUsers(user))
+
       })
+      // .then(() => {
+      //   console.log('trying to redirect')
+      //   // return <Redirect to='/users'/>
+      // })
   }
 
   handleDelete(ev, user){
@@ -58,9 +62,9 @@ export default class Users extends Component {
       <div className='container-fluid'>
         <h1>Users</h1>
         <form onSubmit={this.handleCreate}>
-          <div className='form-control form-control-lg'>
+          <div>
           <input value={this.state.user} onChange={this.handleEvent} placeholder='User Name' />
-          <button className='btn btn-primary'> Create </button>
+          <button> Create </button>
           </div>
         </form>
         <ul className="list-group">
@@ -68,7 +72,7 @@ export default class Users extends Component {
             users.map(user => {
               return (
                 <li key={user.id}>
-                  <Link to={`/users/${user.id}`} >{user.name}</Link>
+                  <Link to={`/user/${user.id}`} >{user.name}</Link>
                   <button className='btn btn-danger' onClick={(ev) => this.handleDelete(ev, user) }> Delete </button>
                 </li>
               )
