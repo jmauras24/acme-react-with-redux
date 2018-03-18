@@ -17,7 +17,6 @@ export default class Users extends Component {
       .then( users => {
         store.dispatch(getUsers(users))
       })
-
       this.unsubscribe = store.subscribe( () =>
       this.setState(store.getState())
     );

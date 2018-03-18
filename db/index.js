@@ -13,11 +13,9 @@ const seed = () => {
     User.create({name: 'Ben'})
   ])
     .then( users => {
-
       console.log(`users created: ${users}`)
     })
 }
-
 
 module.exports = {
   sync,
