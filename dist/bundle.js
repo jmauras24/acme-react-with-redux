@@ -4967,7 +4967,7 @@ var Users = function (_Component) {
             _react2.default.createElement('input', { value: user, onChange: handleEvent, placeholder: 'User Name' }),
             _react2.default.createElement(
               'button',
-              null,
+              { disabled: user.length === 0 },
               ' Create '
             )
           )

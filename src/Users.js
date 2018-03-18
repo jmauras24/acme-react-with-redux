@@ -65,7 +65,7 @@ export default class Users extends Component {
         <form onSubmit={handleCreate}>
           <div>
           <input value={user} onChange={handleEvent} placeholder='User Name' />
-          <button> Create </button>
+          <button disabled={user.length === 0}> Create </button>
           </div>
         </form>
         <ul className='list-group list-group-flush'>
