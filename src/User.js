@@ -49,7 +49,7 @@ export default class User extends Component {
       <form onSubmit={handleUpdate}>
       <div>
       <input value={user} onChange={handleEvent} placeholder={user} />
-          <button className='btn btn-primary'> Update </button>
+          <button> Update </button>
           </div>
         </form>
       </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import store, { getUsers, addUser, updateUsers } from "../store";
+import store, { getUsers, addUser, updateUsers, resetStateFields } from "../store";
 import axios from 'axios';
 
 export default class Users extends Component {
@@ -37,43 +37,44 @@ export default class Users extends Component {
     axios.post('/api/users', { name: user })
       .then( res => res.data )
       .then( user => {
-        store.dispatch(updateUsers(user))
-
+        store.dispatch(updateUsers(user));
+        store.dispatch(resetStateFields(''));
       })
       // .then(() => {
       //   console.log('trying to redirect')
-      //   // return <Redirect to='/users'/>
+      //   // return <Redirect to='/users'/>   ??? works without this, react taking care of it
       // })
   }
 
-  handleDelete(ev, user){
+  handleDelete(ev, id){
     ev.preventDefault()
-    axios.delete(`/api/users/${user.id}`)
+    axios.delete(`/api/users/${id}`)
       .then( res => res.data )
       .then( () => {
-        const users = this.state.users.filter(_user => _user.id === user.id*1 ? false : true)
+        const users = this.state.users.filter(user => user.id === id*1 ? false : true)
         store.dispatch(getUsers(users))
       })
   }
 
   render(){
-    const { users } = this.state;
+    const { users, user } = this.state;
+    const { handleCreate, handleDelete, handleEvent } = this;
     return(
-      <div className='container-fluid'>
+      <div>
         <h1>Users</h1>
-        <form onSubmit={this.handleCreate}>
+        <form onSubmit={handleCreate}>
           <div>
-          <input value={this.state.user} onChange={this.handleEvent} placeholder='User Name' />
+          <input value={user} onChange={handleEvent} placeholder='User Name' />
           <button> Create </button>
           </div>
         </form>
-        <ul className="list-group">
+        <ul className='list-group list-group-flush'>
           {
             users.map(user => {
               return (
-                <li key={user.id}>
-                  <Link to={`/user/${user.id}`} >{user.name}</Link>
-                  <button className='btn btn-danger' onClick={(ev) => this.handleDelete(ev, user) }> Delete </button>
+                <li className='list-group-item' key={user.id}>
+                  <Link to={`/user/${user.id}`} ><span style={{fontSize: 30}}>{user.name}</span></Link>
+                  <button style={{ margin: '20px'}} className='glyphicon glyphicon-remove btn-sm btn-danger' onClick={(ev) => handleDelete(ev, user.id) }></button>
                 </li>
               )
             })

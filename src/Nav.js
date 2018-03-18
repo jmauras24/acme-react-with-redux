@@ -12,14 +12,14 @@ const Nav = ({ path }) => {
         ( <Link to='/users'>Users</Link> )
       }
       </li>
-      <li>
+     {/* <li>
       {
         path === '/create' ?
         ( <span>Create User</span> )
         :
         ( <Link to='/create'>Create User</Link> )
       }
-      </li>
+    </li> */}
       <li>
       {
         path === '/products' ?
