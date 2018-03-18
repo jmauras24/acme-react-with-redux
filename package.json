@@ -6,7 +6,11 @@
   "scripts": {
     "start": "webpack -w & DATABASE_URL=postgres://localhost/acme_react_with_redux nodemon server.js",
     "start-server": "nodemon server",
-    "build-client": "webpack"
+    "build-client": "webpack",
+    "postinstall": "npm run webpack",
+    "webpack": "./node_modules/webpack/bin/webpack.js",
+    "production": "DATABASE_URL"
+
   },
   "author": "",
   "license": "ISC",
