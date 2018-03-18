@@ -4894,7 +4894,6 @@ var Users = function (_Component) {
       }).then(function (users) {
         _store2.default.dispatch((0, _store.getUsers)(users));
       });
-
       this.unsubscribe = _store2.default.subscribe(function () {
         return _this2.setState(_store2.default.getState());
       });
